@@ -6,17 +6,16 @@ class Tree
 private:
 	unsigned int size;
 	Node* root;
-	void insert(Node* subroot, int val);
+	void insert(Node* subroot, int val,int key);
 	void print_direct(Node* subroot);
 	void print_back(Node* subroot);
 	void print_sym(Node* subroot);
-	void insert_direct(Node* subroot);
+	void insert(Node* subroot);
 protected:
 	Node* getRoot();
 public:
 	explicit Tree();
-
-	void push(int);
+	void push(int,int);
 	void print_direct();
 	void print_back();
 	void print_sym();

@@ -9,52 +9,75 @@ Node* Tree::getRoot() {
 	return root;
 }
 
-void Tree::push(int val)
+void Tree::push(int val,int key)
 {
 	if (root == nullptr) {
-		root = new Node(val);
+		root = new Node(val,key);
 		size++;
 	}
-	else insert(root, val);
+	else insert(root, val,key);
 }
 
-void Tree::insert(Node* subroot, int val) {
+void Tree::insert(Node* subroot, int val, int key) {
 	if (subroot == nullptr) return;
 	int subRootValue = subroot->getValue();
 	if (val == subRootValue) return;
 	if (val > subRootValue) {
 		if (subroot->getRight() == nullptr) {
-			Node* right_node = new Node(val);
+			Node* right_node = new Node(val,key);
 			subroot->setRight(right_node);
 			size++;
 			return;
 		}
-		else insert(subroot->getRight(), val);
+		else if (subroot->getRight()->getKey() < key) {
+			Node* temp = subroot->getRight();
+			Node* right_node = new Node(val, key);
+			subroot->setRight(right_node);
+			if (temp->getRight() != nullptr && temp->getRight()->getValue() > right_node->getValue()) {
+				right_node->setRight(temp->getRight());
+				temp->setRight(nullptr);
+			}
+			right_node->setRight(temp);
+			return;
+		}
+		else insert(subroot->getRight(), val,key);
 	}
 	if (val < subRootValue) {
 		if (subroot->getLeft() == nullptr) {
-			Node* left_node = new Node(val);
+			Node* left_node = new Node(val,key);
 			subroot->setLeft(left_node);
 			size++;
 			return;
 		}
-		else insert(subroot->getLeft(), val);
+		else if (subroot->getLeft()->getKey() < key) {
+			Node* temp = subroot->getLeft();
+			Node* left_node = new Node(val, key);
+			subroot->setLeft(left_node);
+			if (temp->getRight() != nullptr && temp->getRight()->getValue() > left_node->getValue()) {
+				left_node->setRight(temp->getRight());
+				temp->setRight(nullptr);
+			}
+			left_node->setLeft(temp);
+			size++;
+			return;
+		}
+		else insert(subroot->getLeft(), val,key);
 	}
 }
 
 void Tree::merge(Tree* A, Tree* B)
 {
-	insert_direct(A->getRoot()); //клонирование дерева A
-	insert_direct(B->getRoot()); //вставка дерева B в прямом порядке
+	Tree::insert(A->getRoot());
+	Tree::insert(B->getRoot());
 }
 
-void Tree::insert_direct(Node* subroot) {
+void Tree::insert(Node* subroot) {
 	if (subroot == nullptr) return;
-	this->push(subroot->getValue());
-	insert_direct(subroot->getLeft());
-	insert_direct(subroot->getRight());
-}
+	this->push(subroot->getValue(),subroot->getKey());
+	insert(subroot->getLeft());
+	insert(subroot->getRight());
 
+}
 void Tree::print_direct() {
 	if (root == nullptr) return;
 	else print_direct(root);

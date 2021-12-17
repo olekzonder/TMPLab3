@@ -10,8 +10,8 @@ bool sortbysec(const std::pair<int, int>& a,const std::pair<int, int>& b)
 
 int main() {
 	setlocale(LC_ALL, "Russian");
-	std::vector<std::pair<int,float>> a;
-	std::vector<std::pair<int,float>> b;
+	std::vector<std::pair<int,int>> a;
+	std::vector<std::pair<int,int>> b;
 
 	Tree A;
 	int sizeA;
@@ -26,11 +26,11 @@ int main() {
 	std::sort(a.begin(),a.end(),sortbysec);
 	std::reverse(a.begin(), a.end());
 	for (int i = 0; i < sizeA; i++) {
-		A.push(a[i].first);
+		A.push(a[i].first,a[i].second);
 	}
 	std::cout << "Дерево A в обратном порядке: ";
 	A.print_back();
-	std::cout << std::endl;
+	std::cout << std::endl;	
 
 	Tree B;
 	int sizeB;
@@ -44,7 +44,7 @@ int main() {
 	std::sort(b.begin(), b.end(), sortbysec);
 	std::reverse(b.begin(), b.end());
 	for (int i = 0; i < sizeB; i++) {
-		B.push(b[i].first);
+		B.push(b[i].first,b[i].second);
 	}
 	std::cout << "Дерево B в симметричном порядке: ";
 	B.print_sym();
@@ -55,14 +55,14 @@ int main() {
 
 	std::cout << "Дерево C в прямом порядке: ";
 	C.print_direct();
-	std::cout << std::endl;	
+	std::cout << std::endl;
 
 	std::cout << "Дерево C в обратном порядке: ";
 	C.print_back();
 	std::cout << std::endl;
 
 	std::cout << "Дерево C в симметричном порядке: ";
-	C.print_back();
+	C.print_sym();
 	std::cout << std::endl;
 	return 0;
 }

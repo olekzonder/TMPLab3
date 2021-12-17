@@ -4,8 +4,9 @@ Node::Node() { //Корень дерева
 	right = nullptr;
 }
 
-Node::Node(int val) {
+Node::Node(int val,int key) {
 	value = val;
+	w = key;
 	left = nullptr;
 	right = nullptr;
 }
@@ -31,4 +32,7 @@ void Node::setValue(int val) {
 }
 int Node::getValue() {
 	return value;
+}
+int Node::getKey() {
+	return w;
 }
